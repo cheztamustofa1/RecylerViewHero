@@ -1,5 +1,6 @@
 package com.example.recylerviewhero;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -7,12 +8,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView rvCategory;
     private ArrayList<Hero> list = new ArrayList<>();
+    private ArrayList<Players> listnya = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +43,17 @@ public class MainActivity extends AppCompatActivity {
 
     private void showRecyclerCardView(){
         rvCategory.setLayoutManager(new LinearLayoutManager(this));
-        CardViewHeroAdapter cardViewPresidentAdapter = new CardViewHeroAdapter(list);
-        rvCategory.setAdapter(cardViewPresidentAdapter);
+        CardViewHeroAdapter cardViewHeroAdapter = new CardViewHeroAdapter(list);
+        rvCategory.setAdapter(cardViewHeroAdapter);
     }
+
+    private void showRecyclerAbout(){
+        Intent intent = new Intent(MainActivity.this, AboutActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+    }
+
 
     private void setActionBarTitle(String title) {
         if (getSupportActionBar() != null) {
@@ -60,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         setMode(item.getItemId());
         return super.onOptionsItemSelected(item);
     }
+
     private String title = "Mode List";
     public void setMode(int selectedMode) {
         switch (selectedMode) {
@@ -76,6 +88,11 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_cardview:
                 title = "Mode CardView";
                 showRecyclerCardView();
+                break;
+
+            case R.id.tentangkami:
+                title = "Tentang kami";
+                showRecyclerAbout();
                 break;
         }
     }
